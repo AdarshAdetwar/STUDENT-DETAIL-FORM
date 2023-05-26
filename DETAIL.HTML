@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Student Details Form</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			background-color: #f4f4f4;
+		}
+
+		.container {
+			display: flex;
+			width: 80%;
+			background-color: #fff;
+			box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+		}
+
+		.form-container {
+			width: 40%;
+			padding: 20px;
+		}
+
+		.form-group {
+			margin-bottom: 20px;
+		}
+
+		.form-group label {
+			display: block;
+			font-weight: bold;
+			margin-bottom: 5px;
+		}
+
+		.input-field {
+			width: 100%;
+			padding: 8px;
+			box-sizing: border-box;
+		}
+
+		.btn {
+			padding: 8px 20px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			cursor: pointer;
+		}
+
+		.btn:hover {
+			background-color: #45a049;
+		}
+
+		.details-container {
+			width: 60%;
+			padding: 20px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		.details-container h2 {
+			margin-bottom: 20px;
+		}
+
+		.student-details {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		.student-image {
+			width: 200px;
+			height: 200px;
+			object-fit: cover;
+			margin-bottom: 10px;
+		}
+
+		.student-table {
+			width: 100%;
+			margin-top: 20px;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+		}
+
+		th, td {
+			padding: 10px;
+			text-align: left;
+		}
+
+		th {
+			background-color: #4CAF50;
+			color: white;
+		}
+
+		tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="form-container">
+			<h2>Student Details Form</h2>
+			<form id="studentForm" onsubmit="addStudent(event)">
+				<div class="form-group">
+					<label for="name">Name:</label>
+					<input type="text" name="name" id="name" class="input-field" required>
+				</div>
+				<div class="form-group">
+					<label for="email">Email:</label>
+					<input type="email" name="email" id="email" class="input-field" required>
+				</div>
+				<div class="form-group">
+					<label for="imageLink">Image Link:</label>
+					<input type="text" name="imageLink" id="imageLink" class="input-field" required>
+				</div>
+				<div class="form-group">
+					<label for="skills">Skills (comma-separated):</label>
+					<input type="text" name="skills" id="skills" class="input-field" required>
+				</div>
+				<button type="submit" class="btn">Add Student</button>
+			</form>
+		</div>
+		<div class="details-container">
+			<h2>Student Details</h2>
+			<div id="studentDetails"></div>
+		</div>
+	</div>
+
+	<script>
+		function addStudent(event) {
+			event.preventDefault();
+
+			var name = document.getElementById("name").value;
+			var email = document.getElementById("email").value;
+			var imageLink = document.getElementById("imageLink").value;
+			var skills = document.getElementById("skills").value.split(",");
+
+			var studentDetails = document.getElementById("studentDetails");
+
+			var studentContainer = document.createElement("div");
+			studentContainer.classList.add("student-details");
+
+			var studentImage = document.createElement("img");
+			studentImage.src = imageLink;
+			studentImage.alt = "Student Image";
+			studentImage.classList.add("student-image");
+
+			var studentInfo = document.createElement("table");
+			studentInfo.classList.add("student-table");
+
+			var infoBody = document.createElement("tbody");
+
+			var nameRow = document.createElement("tr");
+			var nameCell = document.createElement("td");
+			nameCell.innerText = "Name:";
+			var nameValueCell = document.createElement("td");
+			nameValueCell.innerText = name;
+			nameRow.appendChild(nameCell);
+			nameRow.appendChild(nameValueCell);
+
+			var emailRow = document.createElement("tr");
+			var emailCell = document.createElement("td");
+			emailCell.innerText = "Email:";
+			var emailValueCell = document.createElement("td");
+			emailValueCell.innerText = email;
+			emailRow.appendChild(emailCell);
+			emailRow.appendChild(emailValueCell);
+
+			var skillsRow = document.createElement("tr");
+			var skillsCell = document.createElement("td");
+			skillsCell.innerText = "Skills:";
+			var skillsValueCell = document.createElement("td");
+			skillsValueCell.innerText = skills.join(", ");
+			skillsRow.appendChild(skillsCell);
+			skillsRow.appendChild(skillsValueCell);
+
+			infoBody.appendChild(nameRow);
+			infoBody.appendChild(emailRow);
+			infoBody.appendChild(skillsRow);
+
+			studentInfo.appendChild(infoBody);
+
+			studentContainer.appendChild(studentImage);
+			studentContainer.appendChild(studentInfo);
+
+			studentDetails.appendChild(studentContainer);
+
+			document.getElementById("studentForm").reset();
+		}
+	</script>
+</body>
+</html>
